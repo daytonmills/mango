@@ -1,23 +1,23 @@
+//Require Packages
 const express = require("express");
-const expresshbs = require("express-handlebars");
+const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cheerio = require("cheerio");
-const request = require("request");
 
-mongoose.Promise = Promise;
-
-const Example = require("./models/article");
+//Declare App files
+const app = express();
+const scraper = require('./routes/html.js')(app);
 const dataKey = require("./key");
 
-const app = express();
-
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-
+//Configure Express
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static("public"));
+app.engine('hbs', exphbs({defaultLayout: "main",extname: '.hbs'}));
+app.set('view engine', '.hbs');
+app.set('views', './views')
 
+//Connect to Database
+mongoose.Promise = Promise;
 mongoose.connect(dataKey.mongo);
 var db = mongoose.connection;
 
