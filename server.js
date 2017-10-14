@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 // Declare App files
 const app = express();
 const scraper = require('./routes/html.js')(app);
-const dataKey = require('./key');
 var PORT = process.env.PORT || 3000;
 
 // Configure Express
@@ -20,11 +19,10 @@ app.set('views', './views')
 // Connect to Database
 mongoose.Promise = Promise;
 
-var dbConnect = process.env.MONGODB_URI || "mongodb://localhost/mango";
 if(process.env.MONGODB_URI) {
     mongoose.connect(process.env.MONGODB_URI)
 } else {
-    mongoose.connect(dbConnect);
+    mongoose.connect("mongodb://localhost/mango");
 }
 
 const db = mongoose.connection;
