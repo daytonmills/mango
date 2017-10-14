@@ -18,9 +18,35 @@
 </head>
 
 <body>
-	<main>
-		{{{ body }}}
-	</main>
+	<div class="container">
+		<div class="row">
+			<ul class="side-nav fixed">
+		        <li>
+					<div class="userView">
+						<h1>Mango</h1><p>Mongo news scraper</p>
+		        	</div>
+				</li>
+				<li>
+					<a class="btn waves-effect waves-light orange" href="/">
+					<i class="material-icons left">get_app</i> All Articles</a>
+				</li>
+				<li>
+					<a class="btn waves-effect waves-light orange" href="/saved">
+					<i class="material-icons left">get_app</i> Bookmarks</a>
+				</li>
+				<li>
+					<form action="/scrape" method="post" style="padding-left:15px">
+					    <button type="submit" class="btn-floating btn-large waves-effect waves-light orange">
+					        <i class="material-icons left">get_app</i>
+					    </button>
+					</form>
+				</li>
+		    </ul>
+			<main>
+				{{{ body }}}
+			</main>
+		</div>
+	</div>
 </body>
 
 </html>

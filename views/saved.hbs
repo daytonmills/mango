@@ -1,0 +1,27 @@
+<div style="padding-left:200px">
+    <h2>Bookmarked Articles</h2>
+    <p>Click the bookmark icon to unsave an article</p>
+    <div id="cards">
+        {{#each article}}
+            {{#if this.mark}}
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title"><a href="{{this.link}}">{{this.name}}</a></span>
+                                <form action="/unsave/{{this._id}}" method="post">
+                                    <button type="submit" class="btn-floating halfway-fab waves-effect waves-light orange">
+                                        <i class="material-icons">bookmark</i>
+                                    </button>
+                                </form>
+                                <p>{{this.desc}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
+
+<script src="/js/mango.js"></script>

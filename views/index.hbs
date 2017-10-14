@@ -1,2 +1,30 @@
-<h1>Mango</h1>
-<p>Tech news</p>
+<div style="padding-left:200px">
+    <h2>All Articles</h2>
+    <p>Click the bookmark icon to save an article</p>
+    <div id="cards">
+        {{#each article}}
+            {{#if this.mark}}
+            {{else}}
+                {{#if this.name}}
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <span class="card-title"><a href="{{this.link}}">{{this.name}}</a></span>
+                                    <form action="/save/{{this._id}}" method="post">
+                                        <button type="submit" class="btn-floating halfway-fab waves-effect waves-light orange">
+                                            <i class="material-icons">bookmark</i>
+                                        </button>
+                                    </form>
+                                    <p>{{this.desc}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
+
+<script src="/js/mango.js"></script>

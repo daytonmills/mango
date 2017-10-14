@@ -4,11 +4,6 @@ const Article = require('../models/article.js');
 
 var exports = module.exports = {}
 
-exports.landing = (req, res) =>
-{
-    res.render('index.hbs');
-}
-
 exports.scrape = (req, res) =>
 {
     request('https://techcrunch.com/', (error, response, html) =>
@@ -18,13 +13,15 @@ exports.scrape = (req, res) =>
 
         $('.block-content').each((i, element) =>
         {
+            entry.thum = $(element).children('span').children('a').children('img').attr('src');
             entry.link = $(element).children('.post-title').children().attr('href');
             entry.name = $(element).children('.post-title').children().text();
             entry.desc = $(element).children('.excerpt').text();
+            entry.mark = false;
 
             let article = new Article(entry);
             article.save((err, doc) => { if (err) throw err });
         });
-        res.json(true);
+        res.redirect('/');
     });
 }
