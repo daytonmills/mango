@@ -1,25 +1,30 @@
-const cheerio = require("cheerio");
-const request = require("request");
+const cheerio = require('cheerio');
+const request = require('request');
+const Article = require('../models/article.js');
 
 var exports = module.exports = {}
 
 exports.landing = (req, res) =>
 {
-    request("https://techcrunch.com/", (error, response, html) =>
+    res.render('index.hbs');
+}
+
+exports.scrape = (req, res) =>
+{
+    request('https://techcrunch.com/', (error, response, html) =>
     {
-        var $ = cheerio.load(html);
-        var results = [];
+        const $ = cheerio.load(html);
+        let entry = {};
 
-        $("h2.post-title").each(function(i, element) {
+        $('.block-content').each((i, element) =>
+        {
+            entry.link = $(element).children('.post-title').children().attr('href');
+            entry.name = $(element).children('.post-title').children().text();
+            entry.desc = $(element).children('.excerpt').text();
 
-            var link = $(element).children().attr("href");
-            var title = $(element).children().text();
-
-            results.push({
-                title: title,
-                link: link
-            });
-      });
-      res.json(results);
+            let article = new Article(entry);
+            article.save((err, doc) => { if (err) throw err });
+        });
+        res.json(true);
     });
 }

@@ -1,15 +1,15 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
 var ArticleSchema = new Schema({
-    headline:  String,
-    summary: String,
-    url:   String,
+    name: String,
+    desc: String,
+    link: String,
     comments: [{ body: String, date: Date }],
     date: { type: Date, default: Date.now },
 });
 
-var Article = mongoose.model("Article", ArticleSchema);
+var Article = mongoose.model('Article', ArticleSchema);
 
 module.exports = Article;
