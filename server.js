@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const app = express();
 const scraper = require('./routes/html.js')(app);
 const dataKey = require('./key');
+var PORT = process.env.PORT || 3000;
 
 // Configure Express
 app.use(bodyParser.urlencoded({extended: false}));
@@ -18,7 +19,14 @@ app.set('views', './views')
 
 // Connect to Database
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/mango');
+
+var dbConnect = process.env.MONGODB_URI || "mongodb://localhost/mango";
+if(process.env.MONGODB_URI) {
+    mongoose.connect(process.env.MONGODB_URI)
+} else {
+    mongoose.connect(dbConnect);
+}
+
 const db = mongoose.connection;
 
 db.on('error', function(error) {
@@ -29,6 +37,6 @@ db.once('open', function() {
   console.log('Mongoose connection successful.');
 });
 
-app.listen(3000, function() {
-  console.log('App running on port 3000!');
+app.listen(PORT, function() {
+  console.log('App running on port ' + PORT);
 });
